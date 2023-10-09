@@ -1,0 +1,24 @@
+<nav class="tx-center">
+  <button
+    class="btn rounded-lg mg-x-10"
+    [ngClass]="{
+      'btn-primary': page === 'prompt',
+      'btn-outline-primary': page !== 'prompt',
+      active: page === 'prompt'
+    }"
+    [routerLink]="['/prompt']"
+  >
+    Prompt
+  </button>
+  <button
+    class="btn rounded-lg mg-x-10"
+    [ngClass]="{
+      'btn-primary': page === 'history',
+      'btn-outline-primary': page !== 'history',
+      active: page === 'history'
+    }"
+    [routerLink]="['/history']"
+  >
+    History
+  </button>
+</nav>

@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   selector: 'at-footer',
   template: `<div
-    class="bg-white border-top ht-40 w-100 tx-12 pd-t-10 tx-center"
+    class="pos-absolute bottom-0 bg-white border-top ht-40 w-100 tx-12 pd-t-10 tx-center"
   >
     Copyright © {{ year }}
     <a href="/" class="text-primary">

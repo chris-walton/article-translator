@@ -39,16 +39,25 @@ app.post("api/run/open-ai", verify, async (ctx: Context) =>
   ctx.json(await ctx.var.ai.runOpenAiAsync(await ctx.req.text()))
 );
 
-app.get("api/logs", verify, async (ctx: Context) =>
-  ctx.json(await ctx.env.KV.get("LOGS", "json"))
+app.get("api/messages", verify, async (ctx: Context) =>
+  ctx.text((await ctx.env.KV_DATA.get("LOGS")) ?? "[]", 200, {
+    "Content-Type": "application/json",
+  })
 );
-app.post("api/logs", verify, async (ctx: Context) => {
-  const list = (await ctx.env.KV.get<any[]>("LOGS", "json")) ?? [];
+app.put("api/messages/:id", verify, async (ctx: Context) => {
+  const { id } = ctx.req.param();
+  const log = await ctx.req.json();
 
-  list?.push(await ctx.req.json());
+  if (id !== log.id) return ctx.text("Bad Requestion", 400);
 
-  await ctx.env.KV.put("LOGS", JSON.stringify(list));
+  const list = (await ctx.env.KV_DATA.get<any[]>("LOGS", "json")) ?? [];
+  const index = list.findIndex((x) => x.id === id);
 
-  return ctx.text("", 204);
+  if (index > -1) list[index] = log;
+  else list.splice(0, 0, log);
+
+  ctx.executionCtx.waitUntil(ctx.env.KV_DATA.put("LOGS", JSON.stringify(list)));
+
+  return ctx.newResponse(null, { status: 204 });
 });
 export default app;

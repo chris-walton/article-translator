@@ -1,0 +1,126 @@
+<at-nav page="prompt" />
+<div class="container-fluid mg-t-30">
+  <form [formGroup]="form" (ngSubmit)="run()">
+    <div class="row mb-3">
+      <label for="aiModel" class="col-sm-2 col-form-label tx-15">
+        AI Model
+      </label>
+      <div class="col-sm-10">
+        <input #aiModel type="hidden" formControlName="aiModel" />
+        <button
+          *ngFor="let model of aiModels"
+          type="button"
+          class="btn mg-x-10"
+          [ngClass]="{
+            'btn-primary active': aiModel.value === model.id,
+            'btn-outline-primary': aiModel.value !== model.id
+          }"
+          (click)="form.patchValue({ aiModel: model.id })"
+        >
+          {{ model.name }}
+        </button>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="aiModel" class="col-sm-2 col-form-label tx-15">
+        AI System Instructions
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          formControlName="system"
+          class="form-control w-100"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="aiModel" class="col-sm-2 col-form-label tx-15">
+        Your prompt
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          formControlName="prompt"
+          class="form-control w-100"
+        />
+      </div>
+    </div>
+    <div class="row mb-3" atFillElement [paddingBottom]="60">
+      <div class="col-sm-6 tx-center d-flex flex-column">
+        <label for="article" class="col-form-label tx-15"> Article </label>
+        <textarea
+          #article
+          class="form-control w-100 flex-grow-1"
+          formControlName="article"
+        ></textarea>
+        <label for="article" class="tx-italic flex-shrink-0 ht-40">
+          Paste the article you want translated here.
+        </label>
+      </div>
+      <div class="col-sm-6 tx-center d-flex flex-column">
+        <label for="article" class="col-form-label tx-15"> Response </label>
+
+        <div
+          *ngIf="!response()"
+          class="w-100 pd-t-200"
+          atFillElement
+          [paddingBottom]="30"
+        >
+          <div *ngIf="!processing()">
+            <button
+              type="button"
+              [disabled]="processing()"
+              class="btn btn-outline-primary mg-x-10"
+              (click)="reset()"
+            >
+              Reset Form
+            </button>
+
+            <button
+              type="submit"
+              [disabled]="processing() || !form.valid"
+              class="btn btn-primary mg-x-10"
+            >
+              Submit
+            </button>
+          </div>
+          <div *ngIf="processing()">
+            <fa-icon [icon]="faSpinner" [spin]="true" size="lg" />
+            <span class="mg-l-10 tx-15">Processing</span>
+          </div>
+        </div>
+        <ng-template [ngIf]="response()">
+          <textarea
+            #article
+            class="form-control w-100 flex-grow-1"
+            [value]="response()"
+          ></textarea>
+          <div class="w-100 pd-t-5 ht-40 d-flex flex-row">
+            <div class="w-50 tx-left rating-panel">
+              Rate The Response:&nbsp;
+              <ngb-rating [max]="5" [rate]="0" (rateChange)="rate($event)" />
+            </div>
+            <div class="w-50 tx-right">
+              <button
+                type="button"
+                [disabled]="processing()"
+                class="btn btn-outline-primary mg-x-10"
+                (click)="reset()"
+              >
+                Reset Form
+              </button>
+
+              <button
+                type="submit"
+                [disabled]="processing() || !form.valid"
+                class="btn btn-primary mg-x-10"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </form>
+</div>

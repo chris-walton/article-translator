@@ -2,8 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-  AiLog,
-  AiModel,
   OpenAiRequest,
   OpenAiResults,
   WorkerAiRequest,
@@ -12,10 +10,6 @@ import {
 
 export class AiDataService {
   constructor(private readonly http: HttpClient) {}
-
-  getModelsAsync(type: 'text'): Observable<AiModel[]> {
-    return this.http.get<AiModel[]>('api/models/' + type);
-  }
 
   runWorkerAiAsync(
     model: string,
@@ -48,13 +42,5 @@ export class AiDataService {
         return answer;
       })
     );
-  }
-
-  getLogsAsync(): Observable<AiLog[]> {
-    return this.http.get<AiLog[]>('api/logs');
-  }
-
-  putLogAsync(log: AiLog): Observable<void> {
-    return this.http.post<void>('api/logs', log);
   }
 }

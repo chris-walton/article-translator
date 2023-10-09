@@ -1,10 +1,22 @@
-name = "worker"
+name = "article-translator"
+account_id = "ce9999d7d59fce98a0bc0e7911cb6e1f"
 main = "src/index.ts"
-compatibility_date = "2023-10-08"
+compatibility_date = "2023-10-02"
+logpush = true
 
-[vars]
-AI_GATEWAY = "test-gateway"
+[env.dev]
+name = "article-translator-dev"
+usage_model = "unbound"
+kv_namespaces = [
+  { binding = "KV_DATA", id = "c41097efff6a451c8360a188de6fc499", preview_id = "38d15b955d7d420ba8aa03b08d820dc5" },
+]
+
+[env.dev.vars]
+AI_GATEWAY = "article-translator-dev"
 ALLOWED_USERS = "auth0|65235596c71575bb82cdfd0e,auth0|62a26ab9b5d49668f27fd502"
 AUTH_AUDIENCE = "https://article-translator.au.auth0.com/api/v2/"
 AUTH_DOMAIN = "article-translator.au.auth0.com"
 CORS_ORIGINS = "http://localhost:4200"
+
+[dev]
+port = 88

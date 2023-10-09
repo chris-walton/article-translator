@@ -17,7 +17,7 @@ export const AUTH_CONFIG: AuthConfig = {
 };
 
 export const DATADOG_ENV: LogsInitConfiguration = {
-  clientToken: 'e8e362c89c7150dda9f27cc607cd153c2a88cc53',
+  clientToken: 'cb6337a8c3f3401481a929583aa1d627628d84e7',
   site: 'us1.datadoghq.com',
   service: 'article-translator-site',
   env: environment.datadogEnvironment,

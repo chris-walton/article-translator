@@ -1,18 +1,24 @@
 {
-  "name": "worker",
+  "name": "article-translator-dev",
   "version": "0.0.0",
-  "devDependencies": {
-    "@cloudflare/workers-types": "^4.20231002.0",
-    "typescript": "^5.2.2",
-    "wrangler": "^3.11.0"
-  },
   "private": true,
   "scripts": {
-    "start": "wrangler dev",
-    "deploy": "wrangler publish"
+    "setup": "yarn",
+    "build": "esbuild src/index.ts --outfile=dist/index.js --bundle --loader:.html=text --format=esm",
+    "check": "tsc -noEmit --watch",
+    "check2": "tsc -noEmit",
+    "build-test": "concurrently \"tsc -noEmit --watch\" \"yarn run esbuild\"",
+    "publish": "wrangler publish --env prod",
+    "start": "wrangler dev --env dev"
   },
   "dependencies": {
     "@cfworker/jwt": "^4.0.6",
     "hono": "^3.7.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231002.0",
+    "prettier": "^2.8.4",
+    "typescript": "^5.2.2",
+    "wrangler": "^3.11.0"
   }
 }
