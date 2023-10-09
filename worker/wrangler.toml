@@ -1,0 +1,10 @@
+name = "worker"
+main = "src/index.ts"
+compatibility_date = "2023-10-08"
+
+[vars]
+AI_GATEWAY = "test-gateway"
+ALLOWED_USERS = "auth0|65235596c71575bb82cdfd0e,auth0|62a26ab9b5d49668f27fd502"
+AUTH_AUDIENCE = "https://article-translator.au.auth0.com/api/v2/"
+AUTH_DOMAIN = "article-translator.au.auth0.com"
+CORS_ORIGINS = "http://localhost:4200"

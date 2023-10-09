@@ -1,0 +1,24 @@
+@import "./variables";
+
+@import "util/background";
+@import "util/border";
+@import "util/height";
+@import "util/margin";
+@import "util/opacity";
+@import "util/padding";
+@import "util/position";
+@import "util/typography";
+@import "util/width";
+
+html,
+body,
+at-app {
+  padding: 0;
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+}
+
+at-app {
+  display: flex;
+  flex-direction: column;
+}

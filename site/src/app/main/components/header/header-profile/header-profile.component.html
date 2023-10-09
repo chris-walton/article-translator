@@ -1,0 +1,17 @@
+<div
+  ngbDropdown
+  *ngIf="user(); let user"
+  class="profile-dropdown"
+  container="body"
+>
+  <a class="pointer" ngbDropdownToggle>
+    <at-header-profile-picture [picture]="user.picture" />
+  </a>
+  <div ngbDropdownMenu class="profile-menu pb-0 profile-shadow">
+    <at-header-profile-header [user]="user" />
+
+    <a ngbDropdownItem routerLink="/logout" class="bg-light-light">
+      <fa-icon [icon]="faPowerOff" class="me-2" /> &nbsp;&nbsp; Log Out
+    </a>
+  </div>
+</div>
