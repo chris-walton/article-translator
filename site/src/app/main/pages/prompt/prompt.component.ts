@@ -1,4 +1,4 @@
-import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
 import {
   FormControl,
@@ -17,6 +17,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSpinner } from '@fortawesome/pro-solid-svg-icons';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { first } from 'rxjs/operators';
+import { AI_MODELS } from 'src/environments/globals';
 
 @Component({
   standalone: true,
@@ -51,10 +52,7 @@ export class PromptComponent implements OnInit {
     system: new FormControl<string>('', [Validators.required]),
     prompt: new FormControl<string>('', [Validators.required]),
   });
-  readonly aiModels = [
-    { id: 'gpt-3.5-turbo', name: 'ChatGPT 3.5' },
-    { id: 'gpt-4', name: 'ChatGPT 4' },
-  ];
+  readonly aiModels = AI_MODELS;
 
   constructor(
     private readonly auth: AuthService,
@@ -65,7 +63,7 @@ export class PromptComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.user$.pipe(first()).subscribe((user) => {
-      this.userId = user!.sub;
+      this.userId = user!.name;
     });
   }
 
@@ -78,7 +76,7 @@ export class PromptComponent implements OnInit {
       author: this.userId!,
       aiModel: this.form.value.aiModel!,
       article: this.form.value.article!,
-      prompt: `${this.form.value.prompt}\n\n${this.form.value.article}`,
+      prompt: this.form.value.prompt!,
       system: this.form.value.system!,
       timestamp: new Date(),
     };
@@ -91,7 +89,7 @@ export class PromptComponent implements OnInit {
             role: 'assistant',
           },
           {
-            content: this.message.prompt,
+            content: `${this.message.prompt}\n\n${this.message.article}`,
             role: 'user',
           },
         ],

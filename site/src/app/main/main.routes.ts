@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuardFn } from '@auth0/auth0-angular';
+import { historyResolver } from './services';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/prompt', pathMatch: 'full' },
@@ -15,9 +16,6 @@ export const routes: Routes = [
           import('./pages/prompt/prompt.component').then(
             (m) => m.PromptComponent
           ),
-        data: {
-          page: 'prompt',
-        },
       },
       {
         path: 'history',
@@ -25,8 +23,8 @@ export const routes: Routes = [
           import('./pages/history/history.component').then(
             (m) => m.HistoryComponent
           ),
-        data: {
-          page: 'history',
+        resolve: {
+          history: historyResolver,
         },
       },
     ],

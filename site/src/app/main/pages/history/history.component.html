@@ -1,4 +1,115 @@
 <at-nav page="history" />
-<div class="w-100 tx-center pd-t-100">
-  <h2>Coming Soon...</h2>
+
+<div class="container-fluid mg-t-30">
+  <div class="row mg-b-10">
+    <div class="col-sm-2">
+      <div ngbDropdown class="d-inline-block" container="body">
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          {{ aiModel.name }}
+        </button>
+        <div
+          ngbDropdownMenu
+          aria-labelledby="dropdownBasic1"
+          class="bg-white opacity-1"
+        >
+          <button
+            *ngFor="let model of aiModels"
+            ngbDropdownItem
+            (click)="aiModel = model"
+          >
+            {{ rating.name }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div ngbDropdown class="d-inline-block">
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          id="dropdownBasic2"
+          ngbDropdownToggle
+        >
+          {{ rating.name }}
+        </button>
+        <div
+          ngbDropdownMenu
+          aria-labelledby="dropdownBasic2"
+          class="bg-white opacity-1"
+        >
+          <button
+            *ngFor="let model of ratings"
+            ngbDropdownItem
+            (click)="rating = model"
+          >
+            {{ model.name }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <input
+        class="w-100 form-control"
+        #search
+        placeholder="Type here to search the results"
+        (keyup)="cd.detectChanges()"
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-striped table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">When</th>
+            <th scope="col">Who</th>
+            <th scope="col">Model</th>
+            <th scope="col">Prompt</th>
+            <th scope="col">Rating</th>
+            <th scope="col" class="wd-80">&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let row of history
+                | historyFilter : [aiModel.id, rating.id, search.value]
+            "
+          >
+            <td class="wd-200">{{ row.timestamp | dateText }}</td>
+            <td>{{ row.author }}</td>
+            <td class="wd-150">{{ row.aiModel | aiModelName }}</td>
+            <td>
+              <span *ngIf="row.prompt; let prompt">
+                {{
+                  prompt.substring(0, 40) + (prompt.length > 40 ? "..." : "")
+                }}
+              </span>
+            </td>
+            <td class="wd-120">
+              <ngb-rating
+                *ngIf="row.rating; let rating"
+                [max]="5"
+                [rate]="rating"
+              />
+            </td>
+            <td class="tx-center">
+              <a class="pointer tx-black" (click)="view(row)">
+                <fa-icon [icon]="faEye" size="lg" />
+              </a>
+              &nbsp; &nbsp;
+              <a class="pointer tx-black" (click)="delete(row.id)">
+                <fa-icon [icon]="faTrash" size="lg" />
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

@@ -1,7 +1,7 @@
 import { Context } from "../context";
 
 const headers = "authorization,content-type";
-const methods = "GET,PUT";
+const methods = "GET,PUT,DELETE";
 
 export async function cors(ctx: Context, next: any) {
   try {

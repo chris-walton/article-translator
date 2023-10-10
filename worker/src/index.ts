@@ -60,4 +60,18 @@ app.put("api/messages/:id", verify, async (ctx: Context) => {
 
   return ctx.newResponse(null, { status: 204 });
 });
+app.delete("api/messages/:id", verify, async (ctx: Context) => {
+  const { id } = ctx.req.param();
+
+  const list = (await ctx.env.KV_DATA.get<any[]>("LOGS", "json")) ?? [];
+  const index = list.findIndex((x) => x.id === id);
+
+  if (index === -1) return ctx.text("Bad Requestion", 400);
+
+  list.splice(index, 1);
+
+  ctx.executionCtx.waitUntil(ctx.env.KV_DATA.put("LOGS", JSON.stringify(list)));
+
+  return ctx.newResponse(null, { status: 204 });
+});
 export default app;

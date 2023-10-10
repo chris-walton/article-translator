@@ -39,3 +39,8 @@ export const DATADOG_CONTEXT = {
   app: 'article-translator',
   host: window.location.host,
 };
+
+export const AI_MODELS = [
+  { id: 'gpt-3.5-turbo', name: 'ChatGPT 3.5' },
+  { id: 'gpt-4', name: 'ChatGPT 4' },
+];

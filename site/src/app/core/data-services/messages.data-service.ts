@@ -22,4 +22,8 @@ export class MessagesDataService {
   putAsync(message: Message): Observable<void> {
     return this.http.put<void>('api/messages/' + message.id, message);
   }
+
+  deleteAsync(messageId: string): Observable<void> {
+    return this.http.delete<void>('api/messages/' + messageId);
+  }
 }
