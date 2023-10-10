@@ -38,7 +38,6 @@ export class FillElementDirective implements AfterViewChecked {
   }
 
   private setHeight() {
-    console.log(this.paddingBottom);
     const windowHeight = window?.innerHeight;
     const topOffset = this.calcTopOffset();
     let height = windowHeight - topOffset - this.paddingBottom;
